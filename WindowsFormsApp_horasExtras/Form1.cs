@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -59,17 +60,26 @@ namespace WindowsFormsApp_horasExtras
             SqlDataReader myReader = null;
 
             //SQL COMANDS
-            SqlCommand myCommandGetRut = new SqlCommand("select funcionarios.nombre,funcionarios.rut,registro.fecha from funcionarios\r\ninner join registro on funcionarios.rut=registro.rut\r\norder by nombre", Conexion);
+            //SqlCommand myCommandGetRut = new SqlCommand("select funcionarios.nombre,funcionarios.rut,registro.fecha from funcionarios\r\ninner join registro on funcionarios.rut=registro.rut\r\norder by nombre", Conexion);
 
-            myReader=myCommandGetRut.ExecuteReader();
+            SqlCommand myCommandGetRut = new SqlCommand("WITH cte\r\n     AS (\r\nSELECT ROW_NUMBER() OVER(PARTITION BY a.rut\r\n       ORDER BY a.rut) AS fila,\r\n       a.rut, \r\n       a.fecha, \r\n       LEAD(a.fecha) OVER(PARTITION BY a.rut\r\n       ORDER BY a.fecha) AS siguiente\r\n         FROM dbo.registro AS a\r\n)\r\nSELECT c.rut,\r\n       \r\n       CASE\r\n           WHEN c.fecha > c.siguiente\r\n           THEN c.fecha\r\n           ELSE c.siguiente\r\n       END AS [IN],\r\n       CASE\r\n           WHEN c.siguiente IS NULL\r\n           THEN '19000101'\r\n           WHEN c.fecha < c.siguiente\r\n           THEN c.fecha\r\n           ELSE c.siguiente\r\n       END AS [OUT]\r\nFROM cte AS c\r\nWHERE c.fila % 2 != 0;\r\n", Conexion);
+
+            myReader = myCommandGetRut.ExecuteReader();
 
             while (myReader.Read())
             {
 
+                //string rut = myReader["rut"].ToString();
+                //string nombre = myReader["nombre"].ToString();
+                //string fecha = myReader["fecha"].ToString();
                 string rut = myReader["rut"].ToString();
-                string nombre = myReader["nombre"].ToString();
-                string fecha = myReader["fecha"].ToString();
-                dataGridView.Rows.Add(rut, nombre, fecha);
+                string hora_entrada = myReader["IN"].ToString();
+                string hora_salida = myReader["OUT"].ToString();
+
+                
+
+                dataGridView.Rows.Add(rut, hora_entrada, hora_salida);
+
 
 
             }
