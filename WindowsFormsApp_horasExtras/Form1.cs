@@ -42,7 +42,7 @@ namespace WindowsFormsApp_horasExtras
         private void button1_Click(object sender, EventArgs e)
         {
             //FORMA DE AGREGAR COLUMNAS AL DATA GRID
-            dataGridView.Columns.Add("rut", "Rut");
+            dataGridView.Columns.Add("rut", "RUT");
             dataGridView.Columns.Add("nombre", "NOMBRE");
             dataGridView.Columns.Add("horas_extras", "HORAS EXTRAS");
             dataGridView.Columns.Add("costo", "COSTO");
@@ -57,22 +57,19 @@ namespace WindowsFormsApp_horasExtras
             Conexion.Open();
 
             SqlDataReader myReader = null;
+
             //SQL COMANDS
-            SqlCommand myCommand = new SqlCommand("Select fecha from registro", Conexion);
+            SqlCommand myCommandGetRut = new SqlCommand("select funcionarios.nombre,funcionarios.rut,registro.fecha from funcionarios\r\ninner join registro on funcionarios.rut=registro.rut\r\norder by nombre", Conexion);
 
-            SqlCommand myCommandGetRut = new SqlCommand("select rut, nombre from funcionarios", Conexion);
-
-            myReader = myCommandGetRut.ExecuteReader();
-            //myReader = myCommand.ExecuteReader();
-
+            myReader=myCommandGetRut.ExecuteReader();
 
             while (myReader.Read())
             {
 
                 string rut = myReader["rut"].ToString();
                 string nombre = myReader["nombre"].ToString();
-                dataGridView.Rows.Add(rut, nombre);
-
+                string fecha = myReader["fecha"].ToString();
+                dataGridView.Rows.Add(rut, nombre, fecha);
 
 
             }
