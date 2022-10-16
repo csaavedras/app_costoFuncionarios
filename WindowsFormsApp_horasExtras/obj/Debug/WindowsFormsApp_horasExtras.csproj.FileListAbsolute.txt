@@ -1,0 +1,11 @@
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\bin\Debug\WindowsFormsApp_horasExtras.exe.config
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\bin\Debug\WindowsFormsApp_horasExtras.exe
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\bin\Debug\WindowsFormsApp_horasExtras.pdb
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.csproj.AssemblyReference.cache
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.csproj.SuggestedBindingRedirects.cache
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.Form1.resources
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.Properties.Resources.resources
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.csproj.GenerateResource.cache
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.csproj.CoreCompileInputs.cache
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.exe
+C:\Users\cisaa\OneDrive\Documents\proyectos\aiep\WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras\obj\Debug\WindowsFormsApp_horasExtras.pdb

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp_horasExtras", "WindowsFormsApp_horasExtras\WindowsFormsApp_horasExtras.csproj", "{3596FAED-CF7A-4D68-B81D-B9854EF17DAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3596FAED-CF7A-4D68-B81D-B9854EF17DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3596FAED-CF7A-4D68-B81D-B9854EF17DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3596FAED-CF7A-4D68-B81D-B9854EF17DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3596FAED-CF7A-4D68-B81D-B9854EF17DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0D1731E-2B03-4681-9AEB-67AC7390A8F7}
+	EndGlobalSection
+EndGlobal
