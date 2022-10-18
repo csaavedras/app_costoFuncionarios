@@ -12,39 +12,55 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace WindowsFormsApp_horasExtras
 {
     public partial class Form1 : Form
     {
+        public DataTable Dt;
+        public SqlDataReader Dr;
+        public SqlCommand SqlC;
+
+        //Credenciales para conectar a nuestra base de datos local 
+        string sqlCredencial = "SERVER=LENOVO_S940;DataBase=horas_extras; Integrated Security=SSPI";
+
+
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         public Form1()
         {
 
             InitializeComponent();
-
-            
-            string sqlCredencial = "SERVER=LENOVO_S940;DataBase=horas_extras; Integrated Security=SSPI";
-            SqlConnection Conexion = new SqlConnection(sqlCredencial);
-            Conexion.Open();
-
-            SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("Select nombre_mes from dias order by mes", Conexion);
-            myReader = myCommand.ExecuteReader();
-
-
-            while (myReader.Read())
-            {
-                comboBox1.Items.Add(myReader["nombre_mes"].ToString());
-            }
-            Conexion.Close();
             
         }
 
+        public DataTable CargarDatos(string Tabla)
+        {
+            SqlConnection Conexion = new SqlConnection(sqlCredencial);
+            Dt = new DataTable();
+            SqlC = new SqlCommand("Select * from " + Tabla, Conexion);
+            Dr = SqlC.ExecuteReader();
+            Dt.Load(Dr);
+
+            Conexion.Close();
+
+            return Dt;
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox1.Text = "Selecciona el mes";
+            SqlConnection Conexion = new SqlConnection(sqlCredencial);
+            Conexion.Open();
+
+            SqlCommand myCommand = new SqlCommand("Select nombre_mes from dias", Conexion);
+
+            SqlDataAdapter sdr = new SqlDataAdapter(myCommand);
+            DataTable dt = new DataTable();
+            sdr.Fill(dt);
+            comboBox1.DisplayMember = "nombre_mes";
+            comboBox1.DataSource = dt;
+
+            Conexion.Close();
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -58,27 +74,27 @@ namespace WindowsFormsApp_horasExtras
             //FORMA DE AGREGAR DATOS A LAS FILAS DEL DATA GRID
             //dataGridView.Rows.Add("18.954.102-3", "Camilo", "100", "$24.000");
 
-         
-            String sqlCredencial = "SERVER=LENOVO_S940;DataBase=horas_extras; Integrated Security=SSPI";
+        
             SqlConnection Conexion = new SqlConnection(sqlCredencial);
             Conexion.Open();
 
             SqlDataReader myReader = null;
 
             //SQL COMANDS
-            SqlCommand myCommandGetRut = new SqlCommand("WITH cte\r\n     AS (\r\nSELECT ROW_NUMBER() OVER(PARTITION BY a.rut\r\n       ORDER BY a.rut) AS fila,\r\n       a.rut, \r\n       a.fecha, \r\n       LEAD(a.fecha) OVER(PARTITION BY a.rut\r\n       ORDER BY a.fecha) AS siguiente\r\n         FROM dbo.registro AS a\r\n)\r\nSELECT c.rut,\r\n       \r\n       CASE\r\n           WHEN c.fecha > c.siguiente\r\n           THEN c.fecha\r\n           ELSE c.siguiente\r\n       END AS [IN],\r\n       CASE\r\n           WHEN c.siguiente IS NULL\r\n           THEN '19000101'\r\n           WHEN c.fecha < c.siguiente\r\n           THEN c.fecha\r\n           ELSE c.siguiente\r\n       END AS [OUT]\r\nFROM cte AS c\r\nWHERE c.fila % 2 != 0;\r\n", Conexion);
+            SqlCommand myCommandGetRut = new SqlCommand("leer", Conexion);
 
             myReader = myCommandGetRut.ExecuteReader();
 
             //While
             while (myReader.Read())
             {
-
-                string rut = myReader["rut"].ToString();
+                string rut = myReader[0].ToString();
                 //HORA SALIDA
-                string hora_salida = myReader["IN"].ToString();
+                string hora_salida = myReader["OUT"].ToString();
                 //HORA ENTRADA
-                string hora_entrada = myReader["OUT"].ToString();
+                string hora_entrada = myReader["IN"].ToString();
+                //Nombre
+                string nombre = myReader["nombre"].ToString();
 
                 //Obtener hora de SALIDA formateada
                 string anho = hora_entrada.Substring(0, 2);
@@ -113,29 +129,20 @@ namespace WindowsFormsApp_horasExtras
                 int total_h_contrato = 9;
                 int total_h_extra = cantidad_h_trabajadas - total_h_contrato;
 
-                //Logia para calcular horas extras: 
-                /* if (cantidad_h_trabajadas > total_h_contrato)
-                 {   
-                     Console.WriteLine("El rut: " + " " + rut + " " + "trabajo: " + "  " + total_h_extra + " " + "horas extras");
+                if (cantidad_h_trabajadas > total_h_contrato)
+                {
+                    dataGridView.Rows.Add(rut, nombre, total_h_extra);
+                } 
 
-                 } else
-                 {
-                     Console.WriteLine("El rut: " + " " + rut + " " + "No tiene hora extras");
-                 } */
-
-                //Console.WriteLine("Cantidad de horas trabajadas por "+ rut  + " " + cantidad_h_trabajadas + " " + "horas" + " " + "en la fecha" + " " + anho + '*' + mes + '*' + dia);
-
-
-                dataGridView.Rows.Add(rut, hora_entrada, total_h_extra);
 
             }
-            //Conexion.Close();
+            Conexion.Close();
 
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+          
         }
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
